@@ -1,0 +1,7 @@
+node_modules/
+build/
+*.env
+.env
+.env.local
+~/.linkedin-mcp-tokens.json
+*.js.map
