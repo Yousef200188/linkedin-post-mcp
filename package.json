@@ -1,0 +1,43 @@
+{
+  "name": "linkedin-post-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for creating LinkedIn posts via the LinkedIn REST API",
+  "type": "module",
+  "main": "./build/index.js",
+  "bin": {
+    "linkedin-post-mcp": "build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "linkedin",
+    "model-context-protocol",
+    "ai",
+    "automation",
+    "social-media"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
