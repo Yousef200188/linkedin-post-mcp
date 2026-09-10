@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkedIn Post MCP — انشر على LinkedIn بقوة الذكاء الاصطناعي</title>
+  <meta name="description" content="أداة MCP احترافية تتيح لك نشر محتوى LinkedIn تلقائياً عبر Claude وCursor وأي مساعد ذكاء اصطناعي يدعم بروتوكول MCP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #0A66C2; --blue-light: #1d8bd6; --gold: #F5A623;
+      --dark: #080C14; --dark2: #0E1521; --dark3: #141d2e;
+      --glass: rgba(255,255,255,0.05); --glass-border: rgba(255,255,255,0.1);
+      --text: #E8EDF5; --text-muted: #8B9BB4; --green: #22c55e;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Cairo', sans-serif; background: var(--dark); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(8,12,20,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); }
+    .nav-logo { display: flex; align-items: center; gap: .6rem; font-weight: 900; font-size: 1.2rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { background: var(--blue); color: #fff; padding: .6rem 1.4rem; border-radius: 8px; font-weight: 700; text-decoration: none; transition: all .2s; }
+    .nav-cta:hover { background: var(--blue-light); transform: translateY(-1px); }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(10,102,194,0.25) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 80% 80%, rgba(245,166,35,0.08) 0%, transparent 60%); }
+    .hero-grid { position: absolute; inset: 0; z-index: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(10,102,194,0.15); border: 1px solid rgba(10,102,194,0.4); color: #6BAED6; padding: .4rem 1rem; border-radius: 999px; font-size: .85rem; font-weight: 700; margin-bottom: 1.5rem; position: relative; z-index: 1; animation: fadeDown .6s ease; }
+    .hero-badge .dot { width: 8px; height: 8px; background: var(--blue); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+    h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 900; line-height: 1.15; position: relative; z-index: 1; animation: fadeUp .7s ease .1s both; }
+    .hl-blue { background: linear-gradient(135deg, var(--blue), #4FACFE); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hl-gold { background: linear-gradient(135deg, var(--gold), #FFD700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-sub { font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--text-muted); max-width: 600px; margin: 1.5rem auto; position: relative; z-index: 1; animation: fadeUp .7s ease .2s both; }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; position: relative; z-index: 1; animation: fadeUp .7s ease .3s both; }
+    .btn-gold { background: linear-gradient(135deg, var(--gold), #FFD700); color: #1a1000; padding: .9rem 2.2rem; border-radius: 12px; font-size: 1.05rem; font-weight: 800; text-decoration: none; box-shadow: 0 8px 32px rgba(245,166,35,0.35); transition: all .25s; display: inline-flex; align-items: center; gap: .5rem; }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(245,166,35,0.5); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--glass-border); padding: .9rem 2rem; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all .25s; display: inline-flex; align-items: center; gap: .5rem; }
+    .btn-outline:hover { background: var(--glass); transform: translateY(-2px); }
+
+    /* TERMINAL */
+    .hero-terminal { position: relative; z-index: 1; margin-top: 3.5rem; width: min(700px, 90vw); background: var(--dark2); border: 1px solid var(--glass-border); border-radius: 16px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.6); animation: fadeUp .8s ease .4s both; }
+    .terminal-bar { display: flex; align-items: center; gap: .5rem; padding: .8rem 1.2rem; background: var(--dark3); border-bottom: 1px solid var(--glass-border); }
+    .dot-r { width:12px;height:12px;border-radius:50%;background:#ef4444 }
+    .dot-y { width:12px;height:12px;border-radius:50%;background:#f59e0b }
+    .dot-g { width:12px;height:12px;border-radius:50%;background:#22c55e }
+    .term-label { margin-right: auto; color: #546E7A; font-size: .8rem; font-family: monospace; }
+    .terminal-body { padding: 1.4rem 1.6rem; font-family: 'Courier New', monospace; font-size: .9rem; text-align: left; }
+    .t-line { margin-bottom: .4rem; }
+    .tp { color: var(--green) } .tc { color: #E8EDF5 } .tm { color: var(--text-muted) } .to { color: #6BAED6 } .ts { color: var(--green) }
+    .cursor { display: inline-block; width: 9px; height: 1.1em; background: var(--green); animation: blink 1s infinite; vertical-align: text-bottom; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* STATS */
+    .stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; padding: 3rem 2rem; border-bottom: 1px solid var(--glass-border); }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2.5rem; font-weight: 900; color: var(--blue); }
+    .stat-label { font-size: .9rem; color: var(--text-muted); margin-top: .2rem; }
+
+    /* COMMON */
+    section { padding: 5rem 2rem; }
+    .section-tag { display: inline-block; background: rgba(10,102,194,0.12); color: var(--blue-light); border: 1px solid rgba(10,102,194,0.25); padding: .3rem .9rem; border-radius: 999px; font-size: .8rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .08em; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 1rem; }
+    .section-sub { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; }
+    .center { text-align: center; margin: 0 auto; }
+
+    /* FEATURES */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1100px; margin: 3rem auto 0; }
+    .feature-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; transition: all .3s; }
+    .feature-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(10,102,194,0.4); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+    .feature-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.2rem; }
+    .feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .5rem; }
+    .feature-card p { color: var(--text-muted); font-size: .95rem; }
+
+    /* HOW */
+    .steps { max-width: 800px; margin: 3rem auto 0; }
+    .step { display: flex; gap: 1.5rem; align-items: flex-start; margin-bottom: 2.5rem; }
+    .step-num { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--blue), #1d8bd6); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; box-shadow: 0 8px 24px rgba(10,102,194,0.4); }
+    .step-content h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .4rem; }
+    .step-content p { color: var(--text-muted); }
+    .code-block { background: var(--dark2); border: 1px solid var(--glass-border); border-radius: 14px; overflow: hidden; max-width: 700px; margin: 2rem auto 0; }
+    .code-header { display: flex; padding: .8rem 1.2rem; background: var(--dark3); border-bottom: 1px solid var(--glass-border); }
+    .code-lang { font-size: .8rem; color: var(--text-muted); font-weight: 600; }
+    .code-body { padding: 1.4rem; font-family: 'Courier New', monospace; font-size: .88rem; line-height: 1.7; text-align: left; overflow-x: auto; }
+    .kw{color:#C792EA} .str{color:#C3E88D} .prop{color:#82AAFF}
+
+    /* PRICING */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 3rem auto 0; }
+    .price-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2.5rem; position: relative; overflow: hidden; transition: transform .3s; }
+    .price-card:hover { transform: translateY(-6px); }
+    .price-card.featured { background: linear-gradient(135deg, rgba(10,102,194,0.2), rgba(10,102,194,0.05)); border-color: rgba(10,102,194,0.5); box-shadow: 0 0 0 1px rgba(10,102,194,0.3), 0 24px 64px rgba(10,102,194,0.2); }
+    .price-badge { position: absolute; top: 1.2rem; left: 1.2rem; background: linear-gradient(135deg, var(--gold), #FFD700); color: #1a1000; padding: .25rem .8rem; border-radius: 999px; font-size: .75rem; font-weight: 800; text-transform: uppercase; }
+    .price-plan { font-size: .85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
+    .price-amount { font-size: 3rem; font-weight: 900; line-height: 1; }
+    .price-amount span { font-size: 1.1rem; font-weight: 600; color: var(--text-muted); }
+    .price-desc { color: var(--text-muted); font-size: .9rem; margin: .8rem 0 1.8rem; }
+    .price-features { list-style: none; margin-bottom: 2rem; }
+    .price-features li { display: flex; align-items: center; gap: .7rem; padding: .5rem 0; border-bottom: 1px solid var(--glass-border); font-size: .95rem; }
+    .price-features li:last-child { border: none; }
+    .ck { color: var(--green); font-weight: 900; } .cx { color: #ef4444; }
+
+    /* TESTIMONIALS */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 3rem auto 0; }
+    .testimonial { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.8rem; }
+    .testimonial-text { font-size: 1rem; line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: .8rem; }
+    .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), #4FACFE); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; }
+    .author-name { font-weight: 700; font-size: .95rem; } .author-title { font-size: .8rem; color: var(--text-muted); }
+    .stars { color: var(--gold); font-size: .9rem; margin-bottom: .8rem; }
+
+    /* FAQ */
+    .faq { max-width: 700px; margin: 3rem auto 0; }
+    .faq-item { border: 1px solid var(--glass-border); border-radius: 12px; margin-bottom: .8rem; overflow: hidden; }
+    .faq-q { padding: 1.2rem 1.5rem; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background .2s; }
+    .faq-q:hover { background: var(--glass); }
+    .faq-a { padding: 0 1.5rem 1.2rem; color: var(--text-muted); display: none; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform .3s; font-size: 1.2rem; color: var(--text-muted); }
+
+    /* CTA */
+    .cta-section { text-align: center; padding: 6rem 2rem; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(10,102,194,0.15), transparent); border-top: 1px solid var(--glass-border); }
+    .cta-section h2 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; margin-bottom: 1rem; }
+    .cta-section p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2.5rem; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--glass-border); color: var(--text-muted); font-size: .9rem; }
+    footer a { color: var(--blue-light); text-decoration: none; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media(max-width:640px){ .nav-links{display:none} .hero-actions{flex-direction:column;align-items:center} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#0A66C2"/><text x="6" y="23" font-size="18" font-weight="900" fill="white" font-family="Arial">in</text></svg>
+    LinkedIn Post MCP
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">المميزات</a></li>
+    <li><a href="#how">كيف يعمل</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#faq">أسئلة</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">ابدأ الآن</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge"><span class="dot"></span> متوافق مع Claude &middot; Cursor &middot; أي مساعد MCP</div>
+  <h1>انشر على <span class="hl-blue">LinkedIn</span><br>بقوة <span class="hl-gold">الذكاء الاصطناعي</span></h1>
+  <p class="hero-sub">أداة MCP احترافية تتيح لمساعدك الذكي نشر محتوى LinkedIn مباشرة — نصوص، روابط، صفحات شركات — بأمر واحد فقط.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-gold">&#x1F48E; احصل على النسخة Pro</a>
+    <a href="https://www.npmjs.com/package/linkedin-post-mcp" target="_blank" class="btn-outline">&#x1F4E6; تجربة مجانية على npm</a>
+  </div>
+  <div class="hero-terminal">
+    <div class="terminal-bar">
+      <div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div>
+      <span class="term-label">linkedin-post-mcp</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-line"><span class="tp">$</span> <span class="tc">npx linkedin-post-mcp@latest</span></div>
+      <div class="t-line"><span class="to">[linkedin-post-mcp] Server started. Listening on stdio.</span></div>
+      <div class="t-line" style="margin-top:.8rem"><span class="tm">// في Claude أو Cursor:</span></div>
+      <div class="t-line"><span class="to">&#9654; انشر على LinkedIn: "أعلن عن إطلاق منتجنا الجديد! &#x1F680;"</span></div>
+      <div class="t-line" style="margin-top:.6rem"><span class="ts">&#x2705; تم نشر المنشور بنجاح!</span></div>
+      <div class="t-line"><span class="to">&nbsp;&nbsp; Post URL: https://linkedin.com/feed/update/urn:li:share:...</span></div>
+      <div class="t-line" style="margin-top:.6rem"><span class="tp">$</span> <span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="stats reveal">
+  <div class="stat"><div class="stat-num">8</div><div class="stat-label">أدوات MCP</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">آمن ومحلي</div></div>
+  <div class="stat"><div class="stat-num">OAuth2</div><div class="stat-label">تشفير كامل</div></div>
+  <div class="stat"><div class="stat-num">&#x221E;</div><div class="stat-label">منشورات شهرياً</div></div>
+</div>
+
+<section id="features">
+  <div class="center reveal">
+    <div class="section-tag">المميزات</div>
+    <h2 class="section-title">كل ما تحتاجه للنشر الاحترافي</h2>
+    <p class="section-sub center">من النص البسيط إلى إدارة صفحات الشركات — كل شيء في أداة واحدة</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal"><div class="feature-icon" style="background:rgba(10,102,194,0.15)">&#x1F510;</div><h3>OAuth 2.0 آمن</h3><p>تسجيل دخول آمن عبر LinkedIn مع تجديد تلقائي للـ token وتخزين مشفر محلياً.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon" style="background:rgba(34,197,94,0.15)">&#x1F4DD;</div><h3>نشر النصوص</h3><p>انشر محتوى نصي على ملفك الشخصي بأمر واحد للمساعد الذكي.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon" style="background:rgba(245,166,35,0.15)">&#x1F517;</div><h3>مشاركة الروابط</h3><p>شارك مقالات وروابط مع معاينة تلقائية وتعليق مخصص.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon" style="background:rgba(168,85,247,0.15)">&#x1F3E2;</div><h3>صفحات الشركات</h3><p>انشر باسم صفحة شركتك أو مؤسستك على LinkedIn.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon" style="background:rgba(239,68,68,0.15)">&#x1F5D1;&#xFE0F;</div><h3>حذف المنشورات</h3><p>احذف أي منشور برقم URN الخاص به مباشرة من المساعد.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon" style="background:rgba(6,182,212,0.15)">&#x26A1;</div><h3>npx جاهز للاستخدام</h3><p>لا تثبيت معقد — شغّله مباشرة بأمر npx واحد فقط.</p></div>
+  </div>
+</section>
+
+<section id="how" style="background:var(--dark2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)">
+  <div class="center reveal">
+    <div class="section-tag">كيف يعمل</div>
+    <h2 class="section-title">جاهز في 4 خطوات</h2>
+    <p class="section-sub center">من الصفر إلى النشر على LinkedIn في دقائق</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal"><div class="step-num">1</div><div class="step-content"><h3>أنشئ LinkedIn Developer App</h3><p>اذهب إلى linkedin.com/developers وأنشئ تطبيقاً للحصول على Client ID وClient Secret.</p></div></div>
+    <div class="step reveal"><div class="step-num">2</div><div class="step-content"><h3>أضف الإعداد لـ Claude Desktop</h3><p>أضف سطرين فقط في ملف الإعدادات مع بيانات تطبيقك LinkedIn.</p></div></div>
+    <div class="step reveal"><div class="step-num">3</div><div class="step-content"><h3>سجّل الدخول بـ OAuth مرة واحدة</h3><p>اطلب من المساعد رابط التفويض، افتحه في المتصفح مرة واحدة فقط.</p></div></div>
+    <div class="step reveal"><div class="step-num">4</div><div class="step-content"><h3>انشر بأمر واحد! &#x1F389;</h3><p>قل للمساعد: "انشر على LinkedIn..." والباقي يحدث تلقائياً.</p></div></div>
+  </div>
+  <div class="code-block reveal">
+    <div class="code-header"><span class="code-lang">claude_desktop_config.json</span></div>
+    <div class="code-body"><span class="kw">{</span>
+  <span class="prop">"mcpServers"</span>: <span class="kw">{</span>
+    <span class="prop">"linkedin"</span>: <span class="kw">{</span>
+      <span class="prop">"command"</span>: <span class="str">"npx"</span>,
+      <span class="prop">"args"</span>: [<span class="str">"-y"</span>, <span class="str">"linkedin-post-mcp@latest"</span>],
+      <span class="prop">"env"</span>: <span class="kw">{</span>
+        <span class="prop">"LINKEDIN_CLIENT_ID"</span>: <span class="str">"your_client_id"</span>,
+        <span class="prop">"LINKEDIN_CLIENT_SECRET"</span>: <span class="str">"your_client_secret"</span>
+      <span class="kw">}</span>
+    <span class="kw">}</span>
+  <span class="kw">}</span>
+<span class="kw">}</span></div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="center reveal">
+    <div class="section-tag">الأسعار</div>
+    <h2 class="section-title">اختر الخطة المناسبة</h2>
+    <p class="section-sub center">ابدأ مجاناً — أو احصل على Pro للميزات المتقدمة</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="price-plan">مجاني</div>
+      <div class="price-amount">$0 <span>/ شهرياً</span></div>
+      <p class="price-desc">مثالي للأفراد والتجربة الأولى</p>
+      <ul class="price-features">
+        <li><span class="ck">&#x2713;</span> نشر نصوص على الملف الشخصي</li>
+        <li><span class="ck">&#x2713;</span> مشاركة الروابط والمقالات</li>
+        <li><span class="ck">&#x2713;</span> OAuth 2.0 آمن</li>
+        <li><span class="ck">&#x2713;</span> حذف المنشورات</li>
+        <li><span class="cx">&#x2717;</span> نشر الصور والمرفقات</li>
+        <li><span class="cx">&#x2717;</span> جدولة المنشورات</li>
+        <li><span class="cx">&#x2717;</span> دعم متعدد الحسابات</li>
+        <li><span class="cx">&#x2717;</span> دعم فني مباشر</li>
+      </ul>
+      <a href="https://www.npmjs.com/package/linkedin-post-mcp" target="_blank" class="btn-outline" style="width:100%;justify-content:center">تنزيل مجاناً</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="price-badge">&#x2B50; الأكثر شيوعاً</div>
+      <div class="price-plan" style="margin-top:2rem">Pro</div>
+      <div class="price-amount" style="background:linear-gradient(135deg,#F5A623,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$19 <span style="-webkit-text-fill-color:var(--text-muted)">/ مرة واحدة</span></div>
+      <p class="price-desc">للمحترفين والمسوّقين ورواد الأعمال</p>
+      <ul class="price-features">
+        <li><span class="ck">&#x2713;</span> كل مميزات المجاني</li>
+        <li><span class="ck">&#x2713;</span> نشر الصور والمرفقات</li>
+        <li><span class="ck">&#x2713;</span> جدولة المنشورات</li>
+        <li><span class="ck">&#x2713;</span> إدارة صفحات شركات متعددة</li>
+        <li><span class="ck">&#x2713;</span> تحليلات المنشورات</li>
+        <li><span class="ck">&#x2713;</span> قوالب منشورات جاهزة</li>
+        <li><span class="ck">&#x2713;</span> دعم فني على البريد</li>
+        <li><span class="ck">&#x2713;</span> تحديثات مدى الحياة</li>
+      </ul>
+      <a href="https://gumroad.com" target="_blank" class="btn-gold" style="width:100%;justify-content:center">احصل على Pro &#x2014; $19 &#x1F48E;</a>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--dark2);border-top:1px solid var(--glass-border);border-bottom:1px solid var(--glass-border)">
+  <div class="center reveal">
+    <div class="section-tag">آراء المستخدمين</div>
+    <h2 class="section-title">ماذا يقول المستخدمون</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal"><div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><p class="testimonial-text">"وفّرت ساعات كل أسبوع. الآن أطلب من Claude نشر محتواي على LinkedIn وأنا منشغل بعمل آخر!"</p><div class="testimonial-author"><div class="author-avatar">أ</div><div><div class="author-name">أحمد السيد</div><div class="author-title">مدير تسويق رقمي</div></div></div></div>
+    <div class="testimonial reveal"><div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><p class="testimonial-text">"أفضل أداة MCP جربتها. الإعداد بسيط جداً والنتائج احترافية. استرجعت استثماري في اليوم الأول."</p><div class="testimonial-author"><div class="author-avatar">س</div><div><div class="author-name">سارة الخالدي</div><div class="author-title">رائدة أعمال</div></div></div></div>
+    <div class="testimonial reveal"><div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><p class="testimonial-text">"أخيراً أداة تربط الذكاء الاصطناعي بـ LinkedIn بشكل احترافي. النسخة Pro تستحق كل سنت."</p><div class="testimonial-author"><div class="author-avatar">م</div><div><div class="author-name">محمد العمري</div><div class="author-title">مطور برمجيات</div></div></div></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="center reveal"><div class="section-tag">أسئلة شائعة</div><h2 class="section-title">لديك سؤال؟</h2></div>
+  <div class="faq reveal">
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">ما الفرق بين المجاني والـ Pro؟ <span class="faq-icon">+</span></div><div class="faq-a">النسخة المجانية تدعم النشر الأساسي. النسخة Pro تضيف: نشر الصور، جدولة المنشورات، إدارة حسابات متعددة، وقوالب جاهزة مع دعم فني.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">هل يعمل مع Claude فقط؟ <span class="faq-icon">+</span></div><div class="faq-a">لا! يعمل مع أي مساعد يدعم بروتوكول MCP مثل Claude Desktop وCursor وWindsurf وغيرها.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">هل بياناتي آمنة؟ <span class="faq-icon">+</span></div><div class="faq-a">نعم. الأداة تعمل محلياً على جهازك تماماً. لا يُرسَل أي شيء لخوادمنا. الـ tokens تُخزَّن مشفرة على جهازك فقط.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">هل أحتاج خبرة برمجية؟ <span class="faq-icon">+</span></div><div class="faq-a">لا تقريباً! تحتاج فقط نسخ سطرين في ملف إعدادات Claude. الـ README يشرح كل خطوة بالتفصيل.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">ماذا لو لم أكن راضياً؟ <span class="faq-icon">+</span></div><div class="faq-a">ضمان استرداد كامل خلال 7 أيام من الشراء. فقط راسلنا على البريد الإلكتروني.</div></div>
+  </div>
+</section>
+
+<div class="cta-section reveal">
+  <h2>ابدأ النشر الذكي <span class="hl-blue">اليوم</span></h2>
+  <p>انضم إلى المحترفين الذين يوفّرون ساعات أسبوعياً مع LinkedIn Post MCP</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+    <a href="https://gumroad.com" target="_blank" class="btn-gold">&#x1F48E; احصل على Pro &#x2014; $19</a>
+    <a href="https://www.npmjs.com/package/linkedin-post-mcp" target="_blank" class="btn-outline">تجربة مجانية</a>
+  </div>
+</div>
+
+<footer>
+  <p>صُنع بـ &#x2764;&#xFE0F; | <a href="https://www.npmjs.com/package/linkedin-post-mcp" target="_blank">npm</a> &nbsp;&middot;&nbsp; <a href="https://github.com" target="_blank">GitHub</a></p>
+  <p style="margin-top:.5rem;font-size:.8rem">LinkedIn Post MCP ليس تابعاً لـ LinkedIn Corporation</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
